@@ -1,83 +1,87 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/p5@1.10.0/lib/p5.min.js"></script>
   </head>
   <body>
     <script>
 let x = [];
 let y = [];
-let x_angle=[];
+let x_angle = [];
 let xBase = 200;
 const many = 60;
-let angle=0;
-let showmessage=false;
+let angle = 0;
+let showmessage = false;
 
 function setup() {
   createCanvas(400, 400);
-      for (let i = 0;i<many;i++){
-        x_angle[i] = 10 * i + random(0, 10);
-        y[i]=random(0,400);
+  for (let i = 0; i < many; i++) {
+    x_angle[i] = 10 * i + random(0, 10);
+    y[i] = random(0, 400);
   }
 }
 
 function draw() {
-  background(31,44,44,100);
-  fill(255, 255, 200); // 三日月の色（少し暖かい黄色）
+  background(31, 44, 44, 100);
+  fill(255, 255, 200);
   noStroke();
-  circle(30, 30, 50); // 背景に満月を描く
+  circle(30, 30, 50);
 
-  fill(31, 44, 44); // 背景色と同じ色で一部を隠す
-  circle(50, 20, 50); // 右に少しずらして、三日月っぽく
-  stroke(230,255,255)
+  fill(31, 44, 44);
+  circle(50, 20, 50);
+  stroke(230, 255, 255);
   fill(255);
-  angle+=0.03;
-  
-  for (let i = 0;i<many;i++){
-    x[i]=x_angle[i]+sin(angle+i)*15;
-    circle(x[i],y[i],10);
-    y[i]+=random(1,2);
-      if (y[i]> height){
-        y[i] = random(-200,0);
-        x[i] = 20*i+random(0,10);
-      }
-  }
-  ellipse(200,400,500,100);
-  circle(200,320,80);
-  circle(200,260,65);
-  // 雪だるまの顔パーツ
-　fill(0); // 黒目
-　circle(190, 255, 5); // 左目
-　circle(210, 255, 5); // 右目
+  angle += 0.03;
 
-　fill(255, 100, 100); // にんじん色
-　noStroke();
-　triangle(200, 260, 200, 265, 215, 262); // 鼻
-  
-  // マフラー
-　fill(200, 0, 0); // 赤
-　rect(180, 285, 40, 10, 5); // 首に巻いてる部分
-　rect(195, 295, 10, 20, 3); // 垂れてる部分
-  
-  if (showmessage){
+  for (let i = 0; i < many; i++) {
+    x[i] = x_angle[i] + sin(angle + i) * 15;
+    circle(x[i], y[i], 10);
+    y[i] += random(1, 2);
+    if (y[i] > height) {
+      y[i] = random(-200, 0);
+      x[i] = 20 * i + random(0, 10);
+    }
+  }
+
+  ellipse(200, 400, 500, 100);
+  circle(200, 320, 80);
+  circle(200, 260, 65);
+
+  fill(0);
+  circle(190, 255, 5);
+  circle(210, 255, 5);
+
+  fill(255, 100, 100);
+  noStroke();
+  triangle(200, 260, 200, 265, 215, 262);
+
+  fill(200, 0, 0);
+  rect(180, 285, 40, 10, 5);
+  rect(195, 295, 10, 20, 3);
+
+  if (showmessage) {
     fill(255);
     textSize(20);
     textStyle(BOLD);
-    text("雪もいいよね",150,180)
+    text("雪もいいよね", 150, 180);
   }
 }
 
-function mousePressed(){
+function mousePressed() {
   checkClickOrTouch(mouseX, mouseY);
 }
 
-function touchStarted(){
-  checkClickOrTouch(touchX, touchY);
+function touchStarted() {
+  if (touches.length > 0) {
+    checkClickOrTouch(touches[0].x, touches[0].y);
+  }
+  return false; // ← これでスクロールも防げる
 }
 
-function checkClickOrTouch(x, y){
+function checkClickOrTouch(x, y) {
   let d = dist(x, y, 200, 260);
-  if (d < 40){
+  if (d < 40) {
     showmessage = !showmessage;
   }
 }
