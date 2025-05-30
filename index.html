@@ -68,9 +68,17 @@ function draw() {
 }
 
 function mousePressed(){
-  let d = dist(mouseX,mouseY,200,260);
-  if (d <40){
-    showmessage=!showmessage;
+  checkClickOrTouch(mouseX, mouseY);
+}
+
+function touchStarted(){
+  checkClickOrTouch(touchX, touchY);
+}
+
+function checkClickOrTouch(x, y){
+  let d = dist(x, y, 200, 260);
+  if (d < 40){
+    showmessage = !showmessage;
   }
 }
     </script>
